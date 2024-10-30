@@ -23,8 +23,8 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 # viewsets.ModelViewSet
 # class ScreenshotView(APIView):
-class ScreenshotView(viewsets.ModelViewSet):
-    def post(self, request):
+class ScreenshotViewSet(viewsets.ViewSet):
+    def create(self, request):
         serializer = ScreenshotRequestSerializer(data=request.data)
         if serializer.is_valid():
             url = serializer.validated_data['url']
