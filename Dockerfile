@@ -11,6 +11,9 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install Playwright browsers
+RUN playwright install --with-deps
+
 # Copy the entire project folder into the container
 COPY . /app/
 

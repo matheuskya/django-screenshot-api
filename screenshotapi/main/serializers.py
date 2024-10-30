@@ -12,7 +12,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields=['url', 'name']
 
-class ScreenshotSerializer(serializers.Serializer):
+class ScreenshotRequestSerializer(serializers.Serializer):
     url = serializers.URLField()
     viewport_width = serializers.IntegerField(default=1200)
     viewport_height = serializers.IntegerField(default=720)
