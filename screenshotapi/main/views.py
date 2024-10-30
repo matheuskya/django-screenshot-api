@@ -7,6 +7,8 @@ from main.serializers import UserSerializer, GroupSerializer, ScreenshotRequestS
 from playwright.sync_api import sync_playwright
 from io import BytesIO
 from django.http import HttpResponse
+from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
+from rest_framework.permissions import AllowAny
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -21,10 +23,26 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
 # viewsets.ModelViewSet
 # class ScreenshotView(APIView):
-class ScreenshotViewSet(viewsets.ViewSet):
-    def create(self, request):
+class ScreenshotView(APIView):
+    permission_classes = [AllowAny]
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
+
+    def get(self, request):
+        # Return a simple response for GET requests
+        return Response({
+            "message": "Please use POST method with the following format",
+            "example": {
+                "url": "https://www.google.com",
+                "viewport_width": 1200,
+                "viewport_height": 800,
+                "full_page": True
+            }
+        })
+
+    def post(self, request):
         serializer = ScreenshotRequestSerializer(data=request.data)
         if serializer.is_valid():
             url = serializer.validated_data['url']
